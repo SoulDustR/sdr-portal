@@ -213,36 +213,100 @@
                     <h3 style="color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 10px;">1. Release Metadata</h3>
                     <div class="form-grid">
                         <div>
-                            <label>Release Title</label>
-                            <input type="text" placeholder="Album or Single Name">
-                            <label>Primary Artist</label>
-                            <input type="text" placeholder="Main Performer">
-                        </div>
-                        <div>
+                            <label>Label</label>
+                            <input type="text" placeholder="Record Label Name">
+                            
                             <label>Catalog Number</label>
                             <input type="text" placeholder="e.g. SDR001">
-                            <label>Featured Artist(s)</label>
+                            
+                            <label>Track Number</label>
+                            <input type="number" placeholder="e.g. 1">
+                            
+                            <label>Release Title</label>
+                            <input type="text" placeholder="Album or Single Name">
+                        </div>
+                        <div>
+                            <label>Artist</label>
+                            <input type="text" placeholder="Main Performer">
+                            
+                            <label>Featured Artist</label>
                             <input type="text" placeholder="Ft. Artist Name">
+                            
+                            <label>Remixer</label>
+                            <input type="text" placeholder="Remixer Name (if any)">
+                            
+                            <label>Title</label>
+                            <input type="text" placeholder="Song Title Name">
                         </div>
                     </div>
 
                     <h3 style="color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-top: 20px;">2. Track Details & Rights</h3>
                     <div class="form-grid">
                         <div>
-                            <label>Track Title</label>
-                            <input type="text" placeholder="Song Name">
-                            <label>Mix Name</label>
-                            <input type="text" placeholder="e.g. Original Mix">
+                            <label>Mix</label>
+                            <input type="text" placeholder="e.g. Original Mix, Radio Edit">
+                            
+                            <label>Duration Of Track (e.g. 07:50)</label>
+                            <input type="text" placeholder="MM:SS">
+                            
+                            <label>Authors Of The Lyrics (Full legal names as in I.D.)</label>
+                            <input type="text" placeholder="Lyricist Creator Full Names">
+                            
+                            <label>Composers Of The Music (Full legal names as in I.D.)</label>
+                            <input type="text" placeholder="Music Composer Full Names">
+
+                            <label>Publisher(s)</label>
+                            <input type="text" placeholder="Who is Publishing your music?">
                         </div>
                         <div>
-                            <label>Composer (Full Legal Name)</label>
-                            <input type="text" placeholder="Music Creator">
-                            <label>Author (Full Legal Name)</label>
-                            <input type="text" placeholder="Lyricist Creator">
+                            <label>Publishing Rights Organization (NORM or SAMRO)</label>
+                            <input type="text" placeholder="Collecting organization name">
+                            
+                            <label>Language of Lyrics</label>
+                            <input type="text" placeholder="e.g. isiZulu, English, Instrumental">
+                            
+                            <label>Language of Track Title</label>
+                            <input type="text" placeholder="e.g. isiZulu, English">
+                            
+                            <label>Genre Of Music</label>
+                            <input type="text" placeholder="e.g. Afro Tech, Amapiano, Gqom">
                         </div>
                     </div>
 
-                    <h3 style="color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-top: 20px;">3. Assets & Delivery</h3>
+                    <h3 style="color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-top: 20px;">3. Identifiers & Distribution Distribution Controls</h3>
+                    <div class="form-grid">
+                        <div>
+                            <label>ISRC (Leave blank to allocate from stock)</label>
+                            <input type="text" placeholder="ZA-XXX-XX-XXXXX">
+                            
+                            <label>UPC/EAN (Leave blank to allocate from stock)</label>
+                            <input type="text" placeholder="Barcode ID">
+                            
+                            <label>Release Date</label>
+                            <input type="date">
+                        </div>
+                        <div>
+                            <label>Restrictions (Indicate download sites already on, or type NONE)</label>
+                            <input type="text" placeholder="Already available platforms or NONE">
+                            
+                            <label>MTN & Vodacom (Mark 'X' if main track for mobile ringtones)</label>
+                            <input type="text" placeholder="X (if applicable)">
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-top: 20px;">4. Artist Profile Streaming Links</h3>
+                    <div class="form-grid">
+                        <div>
+                            <label>Spotify Artist Profile URL</label>
+                            <input type="url" placeholder="https://open.spotify.com/artist/...">
+                        </div>
+                        <div>
+                            <label>Apple Music Artist Profile URL</label>
+                            <input type="url" placeholder="https://music.apple.com/za/artist/...">
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-top: 20px;">5. Assets & Delivery</h3>
                     <label>Audio File (.WAV 16-bit / 44.1kHz)</label>
                     <input type="file" accept=".wav">
                     <label>Cover Art (3000x3000px RGB .JPG)</label>
