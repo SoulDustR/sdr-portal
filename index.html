@@ -5,16 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOUL DUST Admin | Power Portal 2026</title>
     
-    <!-- Website Icons (Desktop & Phone Tabs) -->
     <link rel="icon" type="image/png" href="20260519_223515.png">
     <link rel="shortcut icon" type="image/png" href="20260519_223515.png">
     
-    <!-- Android Homescreen Shortcut & Chrome Icon Targets -->
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" type="image/png" sizes="192x192" href="20260519_223515.png">
     <link rel="icon" type="image/png" sizes="512x512" href="20260519_223515.png">
     
-    <!-- Apple / iOS Homescreen Targets -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="apple-touch-icon" href="20260519_223515.png">
     <link rel="apple-touch-icon" sizes="180x180" href="20260519_223515.png">
@@ -115,6 +112,21 @@
         th { text-align: left; padding: 12px; color: var(--gold); font-size: 0.75rem; text-transform: uppercase; border-bottom: 1px solid var(--border); }
         td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; }
 
+        /* PWA Manual Install Button Bottom Sheet UI Setup */
+        #install-sheet {
+            position: fixed; bottom: -100%; left: 0; width: 100%; 
+            background: var(--glass); border-top: 2px solid var(--gold);
+            padding: 35px; border-radius: 35px 35px 0 0; backdrop-filter: blur(40px);
+            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); z-index: 10000; text-align: center;
+            box-sizing: border-box;
+        }
+        #install-sheet.show { bottom: 0; }
+        #overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.75); 
+            display: none; z-index: 9999; backdrop-filter: blur(5px);
+        }
+        #overlay.show { display: block; }
+
         .external-link-card {
             border: 1px dashed var(--gold); background: rgba(197, 160, 89, 0.05);
             padding: 20px; border-radius: 15px; text-align: center;
@@ -142,10 +154,12 @@
             </div>
             
             <div class="nav-item active" onclick="showPage('home', this)">🏠 Dashboard</div>
-            <div class="nav-item" onclick="window.open('https://www.believebackstage.com/catalog/manager', '_blank')">💿 Music Catalog</div>
+            <div class="nav-item" onclick="window.open('https://www.believebackstage.com/catalog/manager', '_blank')">CD Music Catalog</div>
             <div class="nav-item" onclick="showPage('upload', this)">🚀 Add New Release</div>
             <div class="nav-item" onclick="showPage('legal', this)">💳 Bank & Identity</div>
             <div class="nav-item" onclick="showPage('ai', this)">🤖 Support AI</div>
+            
+            <div class="nav-item" style="margin-top: 15px; border: 1px solid var(--gold); color: var(--gold);" onclick="installAppEngine()">📲 Install Portal App</div>
 
             <div class="shortcut-group">
                 <div class="shortcut-header">Our Artists Shortcuts</div>
@@ -205,19 +219,6 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
-
-            <div id="page-catalog" class="page-layer">
-                <h2>Music <span style="font-weight: 200;">Catalog</span></h2>
-                <div class="external-link-card">
-                    <p style="font-size: 0.9rem; margin-bottom: 20px; color: #ccc;">Manage your live releases, view analytics, and track daily performance via our distribution partner.</p>
-                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin-bottom: 20px; display: inline-block; border: 1px solid var(--border);">
-                        <label style="margin-bottom: 5px;">Backstage Access Credentials</label>
-                        <div style="font-family: monospace; color: var(--gold); font-size: 1rem;">Password: OtdAfrica@63#</div>
-                    </div>
-                    <br>
-                    <a href="https://www.believebackstage.com/catalog/manager" target="_blank" class="btn" style="max-width: 300px; margin: 0 auto;">Open Catalog Manager</a>
                 </div>
             </div>
 
@@ -370,7 +371,25 @@
         </main>
     </div>
 
+    <div id="overlay" onclick="closeInstallSheet()"></div>
+    <div id="install-sheet">
+        <img src="20260519_223515.png" style="width:70px; border-radius:15px; margin-bottom:15px; box-shadow: 0 10px 20px rgba(0,0,0,0.4);" alt="SDR Portal">
+        <h2 style="color: var(--gold); margin: 0 0 10px 0; font-size:1.6rem;">Install SDR Admin Portal</h2>
+        <p style="margin: 0 0 25px 0; font-size:0.9rem; opacity:0.8; color:#eee;">Add Soul Dust Admin directly onto your mobile or tablet home screen for smooth access.</p>
+        <button class="btn" style="max-width:280px; margin: 0 auto 15px auto;" onclick="executeNativeInstallPrompt()">Install Now</button>
+        <p style="margin: 5px 0 0 0; font-size: 0.8rem; cursor: pointer; opacity: 0.5;" onclick="closeInstallSheet()">Maybe later</p>
+    </div>
+
     <script>
+        // 1. Navigation Logic
+        function showPage(pageId, element) {
+            document.querySelectorAll('.page-layer').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            element.classList.add('active');
+        }
+
+        // 2. Authentication Route Logic 
         function authenticate() {
             if(document.getElementById('pass-key').value === "SDR2026") {
                 document.getElementById('login-layer').classList.add('hidden');
@@ -378,11 +397,40 @@
             } else { alert("Unauthorized Key"); }
         }
 
-        function showPage(pageId, element) {
-            document.querySelectorAll('.page-layer').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById('page-' + pageId).classList.add('active');
-            element.classList.add('active');
+        // 3. PWA Integration Script Hook Channels (No Manifest Required)
+        let customPromptHook;
+        const panelSheet = document.getElementById('install-sheet');
+        const darkOverlay = document.getElementById('overlay');
+
+        window.addEventListener('beforeinstallprompt', (event) => {
+            event.preventDefault();
+            customPromptHook = event;
+            console.log("SDR Shortcut System Anchored Ready.");
+        });
+
+        function installAppEngine() {
+            if (customPromptHook) {
+                panelSheet.classList.add('show');
+                darkOverlay.classList.add('show');
+            } else {
+                alert("SDR Portal is already optimized. For iPhone/Safari: Tap 'Share' icon at the bottom, then choose 'Add to Home Screen'.");
+            }
+        }
+
+        async function executeNativeInstallPrompt() {
+            closeInstallSheet();
+            if (!customPromptHook) return;
+            customPromptHook.prompt();
+            const { outcome } = await customPromptHook.userChoice;
+            if (outcome === 'accepted') {
+                console.log('User installed SDR Portal Admin shortcut');
+            }
+            customPromptHook = null;
+        }
+
+        function closeInstallSheet() {
+            panelSheet.classList.remove('show');
+            darkOverlay.classList.remove('show');
         }
     </script>
 </body>
