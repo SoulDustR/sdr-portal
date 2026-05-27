@@ -9,8 +9,8 @@
     <link rel="shortcut icon" type="image/png" href="20260519_223515.png">
     
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" type="image/png" sizes="192x192" href="20260519_223515.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="20260519_223515.png">
+    <link class="pwa-icon" rel="icon" type="image/png" sizes="192x192" href="20260519_223515.png">
+    <link class="pwa-icon" rel="icon" type="image/png" sizes="512x512" href="20260519_223515.png">
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="apple-touch-icon" href="20260519_223515.png">
@@ -55,7 +55,7 @@
         .nav-sidebar {
             width: 280px; background: var(--glass); border-radius: 35px;
             border: 1px solid var(--border); display: flex; flex-direction: column;
-            padding: 30px; backdrop-filter: blur(30px);
+            padding: 30px; backdrop-filter: blur(30px); flex-shrink: 0;
         }
 
         .logo-area { text-align: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--border); }
@@ -104,7 +104,7 @@
             width: 100%; padding: 15px; background: var(--gold);
             border: none; border-radius: 8px; font-weight: 700; cursor: pointer;
             color: #222; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
-            text-align: center; text-decoration: none; display: block;
+            text-align: center; text-decoration: none; display: block; box-sizing: border-box;
         }
         .btn:hover { background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
 
@@ -131,6 +131,18 @@
             border: 1px dashed var(--gold); background: rgba(197, 160, 89, 0.05);
             padding: 20px; border-radius: 15px; text-align: center;
         }
+
+        /* --- Mobile Optimization Engine --- */
+        @media (max-width: 900px) {
+            body { overflow-y: auto; height: auto; }
+            .app-shell { flex-direction: column; height: auto; padding: 10px; gap: 15px; }
+            .nav-sidebar { width: 100%; box-sizing: border-box; padding: 20px; border-radius: 25px; }
+            .main-content { width: 100%; box-sizing: border-box; padding: 25px; border-radius: 25px; overflow-y: visible; }
+            .form-grid, style[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+            div[style*="grid-template-columns: 1fr 1fr 1fr"] { grid-template-columns: 1fr !important; gap: 15px !important; }
+            .login-card { padding: 40px 20px; width: 90%; box-sizing: border-box; }
+            table { display: block; overflow-x: auto; white-space: nowrap; }
+        }
     </style>
 </head>
 <body>
@@ -140,9 +152,9 @@
             <img src="Soul Dust.png" class="main-logo" alt="Soul Dust Records">
             <h1 style="letter-spacing: 8px; margin-top: 20px;">SDR <span style="color: var(--gold);">ADMIN</span></h1>
             <p style="font-size: 0.7rem; letter-spacing: 3px; color: #888; margin-bottom: 30px;">ARTIST ADMINISTRATION PORTAL</p>
-            <input type="password" id="pass-key" placeholder="Enter Access Key" style="text-align: center; width: 250px;">
+            <input type="password" id="pass-key" placeholder="Enter Access Key" style="text-align: center; width: 250px; max-width: 100%;">
             <br>
-            <button class="btn" style="width: 250px; margin: 0 auto;" onclick="authenticate()">Sign In</button>
+            <button class="btn" style="width: 250px; max-width: 100%; margin: 0 auto;" onclick="authenticate()">Sign In</button>
         </div>
     </div>
 
@@ -153,11 +165,11 @@
                 <div style="font-weight: 800; font-size: 0.8rem; margin-top: 5px; color: var(--gold);">SOUL DUST</div>
             </div>
             
-            <div class="nav-item active" onclick="showPage('home', this)">🏠 Dashboard</div>
+            <div class="nav-item active" onclick="showPage('home', this)">🩻 Dashboard</div>
             <div class="nav-item" onclick="window.open('https://www.believebackstage.com/catalog/manager', '_blank')">CD Music Catalog</div>
-            <div class="nav-item" onclick="showPage('upload', this)">🚀 Add New Release</div>
-            <div class="nav-item" onclick="showPage('legal', this)">💳 Bank & Identity</div>
-            <div class="nav-item" onclick="showPage('ai', this)">🤖 Support AI</div>
+            <div class="nav-item" onclick="showPage('upload', this)">📂 Add New Release</div>
+            <div class="nav-item" onclick="showPage('legal', this)">💰 Bank & Identity</div>
+            <div class="nav-item" onclick="showPage('ai', this)">🗿 Support AI</div>
             
             <div class="nav-item" style="margin-top: 15px; border: 1px solid var(--gold); color: var(--gold);" onclick="installAppEngine()">📲 Install Portal App</div>
 
@@ -215,7 +227,7 @@
                                 <td>SDR001</td>
                                 <td>Impumelelo</td>
                                 <td>6004262300900</td>
-                                <td style="color: #4caf50;">● Pending</td>
+                                <td><a href="https://bfan.link/impumelelo-3" target="_blank" style="color: var(--gold); text-decoration: none; font-weight: 600;">🔗 Pre-save Link</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -229,7 +241,7 @@
                     <div class="form-grid">
                         <div>
                             <label>Label</label>
-                            <input type="text" placeholder="Record Label Name">
+                            <input type="text" placeholder="Soul Dust Records">
                             
                             <label>Catalog Number</label>
                             <input type="text" placeholder="e.g. SDR001">
@@ -263,175 +275,3 @@
                             
                             <label>Duration Of Track (e.g. 07:50)</label>
                             <input type="text" placeholder="MM:SS">
-                            
-                            <label>Authors Of The Lyrics (Full legal names as in I.D.)</label>
-                            <input type="text" placeholder="Lyricist Creator Full Names">
-                            
-                            <label>Composers Of The Music (Full legal names as in I.D.)</label>
-                            <input type="text" placeholder="Music Composer Full Names">
-
-                            <label>Publisher(s)</label>
-                            <input type="text" placeholder="Who is Publishing your music?">
-                        </div>
-                        <div>
-                            <label>Publishing Rights Organization (NORM or SAMRO)</label>
-                            <input type="text" placeholder="Collecting organization name">
-                            
-                            <label>Language of Lyrics</label>
-                            <input type="text" placeholder="e.g. isiZulu, English, Instrumental">
-                            
-                            <label>Language of Track Title</label>
-                            <input type="text" placeholder="e.g. isiZulu, English">
-                            
-                            <label>Genre Of Music</label>
-                            <input type="text" placeholder="e.g. Afro Tech, Amapiano, Gqom">
-                        </div>
-                    </div>
-
-                    <h3 style="color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-top: 20px;">3. Identifiers & Distribution Distribution Controls</h3>
-                    <div class="form-grid">
-                        <div>
-                            <label>ISRC (Leave blank to allocate from stock)</label>
-                            <input type="text" placeholder="ZA-XXX-XX-XXXXX">
-                            
-                            <label>UPC/EAN (Leave blank to allocate from stock)</label>
-                            <input type="text" placeholder="Barcode ID">
-                            
-                            <label>Release Date</label>
-                            <input type="date">
-                        </div>
-                        <div>
-                            <label>Restrictions (Indicate download sites already on, or type NONE)</label>
-                            <input type="text" placeholder="Already available platforms or NONE">
-                            
-                            <label>MTN & Vodacom (Mark 'X' if main track for mobile ringtones)</label>
-                            <input type="text" placeholder="X (if applicable)">
-                        </div>
-                    </div>
-
-                    <h3 style="color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-top: 20px;">4. Artist Profile Streaming Links</h3>
-                    <div class="form-grid">
-                        <div>
-                            <label>Spotify Artist Profile URL</label>
-                            <input type="url" placeholder="https://open.spotify.com/artist/...">
-                        </div>
-                        <div>
-                            <label>Apple Music Artist Profile URL</label>
-                            <input type="url" placeholder="https://music.apple.com/za/artist/...">
-                        </div>
-                    </div>
-
-                    <h3 style="color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-top: 20px;">5. Assets & Delivery</h3>
-                    <label>Audio File (.WAV 16-bit / 44.1kHz)</label>
-                    <input type="file" accept=".wav">
-                    <label>Cover Art (3000x3000px RGB .JPG)</label>
-                    <input type="file" accept=".jpg">
-
-                    <label style="display: flex; align-items: center; gap: 10px; margin-top: 20px;">
-                        <input type="checkbox" style="width: 18px; margin: 0;"> I Agree to the Static Plastic Terms of Service
-                    </label>
-
-                    <button class="btn" style="margin-top: 20px;">Submit for Review</button>
-                </div>
-            </div>
-
-            <div id="page-legal" class="page-layer">
-                <h2>Account <span style="font-weight: 200;">Verification</span></h2>
-                <div class="form-grid">
-                    <div class="glass-card">
-                        <label>SAMRO Number</label>
-                        <input type="text" placeholder="Member ID">
-                        <label>CAPASSO Number</label>
-                        <input type="text" placeholder="Mechanical ID">
-                    </div>
-                    <div class="glass-card">
-                        <h4 style="margin: 0 0 10px 0;">Payout Method</h4>
-                        <p style="font-size: 0.75rem; color: #aaa;">
-                            Account: ABANTÜ RECORDINGS (PTY) LTD<br>
-                            Bank: NEDBANK<br>
-                            Acc No: 1337406198
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="page-ai" class="page-layer">
-                <h2>Soul Dust <span style="font-weight: 200;">Assistant</span></h2>
-                <div class="glass-card">
-                    <div style="height: 200px; background: rgba(0,0,0,0.3); border-radius: 12px; padding: 15px; border: 1px solid var(--border); margin-bottom: 15px; color: var(--gold); font-size: 0.85rem;">
-                        SDR AI: Welcome. I can help you with ISRC codes, royalty questions, or SAMRO registration help.
-                    </div>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" placeholder="Type your question..." style="margin:0">
-                        <button class="btn" style="width: 100px; padding: 0; margin: 0;">Ask</button>
-                    </div>
-                </div>
-            </div>
-
-        </main>
-    </div>
-
-    <div id="overlay" onclick="closeInstallSheet()"></div>
-    <div id="install-sheet">
-        <img src="20260519_223515.png" style="width:70px; border-radius:15px; margin-bottom:15px; box-shadow: 0 10px 20px rgba(0,0,0,0.4);" alt="SDR Portal">
-        <h2 style="color: var(--gold); margin: 0 0 10px 0; font-size:1.6rem;">Install SDR Admin Portal</h2>
-        <p style="margin: 0 0 25px 0; font-size:0.9rem; opacity:0.8; color:#eee;">Add Soul Dust Admin directly onto your mobile or tablet home screen for smooth access.</p>
-        <button class="btn" style="max-width:280px; margin: 0 auto 15px auto;" onclick="executeNativeInstallPrompt()">Install Now</button>
-        <p style="margin: 5px 0 0 0; font-size: 0.8rem; cursor: pointer; opacity: 0.5;" onclick="closeInstallSheet()">Maybe later</p>
-    </div>
-
-    <script>
-        // 1. Navigation Logic
-        function showPage(pageId, element) {
-            document.querySelectorAll('.page-layer').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById('page-' + pageId).classList.add('active');
-            element.classList.add('active');
-        }
-
-        // 2. Authentication Route Logic 
-        function authenticate() {
-            if(document.getElementById('pass-key').value === "SDR2026") {
-                document.getElementById('login-layer').classList.add('hidden');
-                document.getElementById('portal-shell').classList.remove('hidden');
-            } else { alert("Unauthorized Key"); }
-        }
-
-        // 3. PWA Integration Script Hook Channels (No Manifest Required)
-        let customPromptHook;
-        const panelSheet = document.getElementById('install-sheet');
-        const darkOverlay = document.getElementById('overlay');
-
-        window.addEventListener('beforeinstallprompt', (event) => {
-            event.preventDefault();
-            customPromptHook = event;
-            console.log("SDR Shortcut System Anchored Ready.");
-        });
-
-        function installAppEngine() {
-            if (customPromptHook) {
-                panelSheet.classList.add('show');
-                darkOverlay.classList.add('show');
-            } else {
-                alert("SDR Portal is already optimized. For iPhone/Safari: Tap 'Share' icon at the bottom, then choose 'Add to Home Screen'.");
-            }
-        }
-
-        async function executeNativeInstallPrompt() {
-            closeInstallSheet();
-            if (!customPromptHook) return;
-            customPromptHook.prompt();
-            const { outcome } = await customPromptHook.userChoice;
-            if (outcome === 'accepted') {
-                console.log('User installed SDR Portal Admin shortcut');
-            }
-            customPromptHook = null;
-        }
-
-        function closeInstallSheet() {
-            panelSheet.classList.remove('show');
-            darkOverlay.classList.remove('show');
-        }
-    </script>
-</body>
-</html>
