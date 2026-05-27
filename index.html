@@ -188,6 +188,7 @@
 
         <main class="main-content">
             
+            <!-- Dashboard Page -->
             <div id="page-home" class="page-layer active">
                 <h2>Account <span style="font-weight: 200;">Summary</span></h2>
                 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 30px;">
@@ -234,6 +235,7 @@
                 </div>
             </div>
 
+            <!-- Upload Page -->
             <div id="page-upload" class="page-layer">
                 <h2>Music <span style="font-weight: 200;">Submission Form</span></h2>
                 <div class="glass-card">
@@ -273,5 +275,128 @@
                             <label>Mix</label>
                             <input type="text" placeholder="e.g. Original Mix, Radio Edit">
                             
-                            <label>Duration Of Track (e.g. 07:50)</label>
+                            <label>Duration Of Track</label>
                             <input type="text" placeholder="MM:SS">
+                        </div>
+                        <div>
+                            <label>ISRC Code</label>
+                            <input type="text" placeholder="ZA-XXX-XX-XXXXX">
+                            
+                            <label>Genre</label>
+                            <select>
+                                <option>Afro Tech</option>
+                                <option>Amapiano</option>
+                                <option>Gqom</option>
+                                <option>Deep House</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn" style="margin-top:20px;">Submit Track Metadata</button>
+                </div>
+            </div>
+
+            <!-- Legal Page -->
+            <div id="page-legal" class="page-layer">
+                <h2>Bank & <span style="font-weight: 200;">Identity Management</span></h2>
+                <div class="glass-card">
+                    <p style="color: #aaa; font-size: 0.85rem;">Manage legal documentation, verify identity profiles, and update banking parameters securely.</p>
+                    <div class="external-link-card">
+                        <label style="margin-bottom: 10px;">Secure Identity Verification Portal</label>
+                        <a href="https://id.believe.com" target="_blank" class="btn" style="display:inline-block; width:auto; padding: 12px 30px;">Launch Believe ID Verification ↗</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Page -->
+            <div id="page-ai" class="page-layer">
+                <h2>Support <span style="font-weight: 200;">AI Engine</span></h2>
+                <div class="glass-card">
+                    <p style="color: #aaa; font-size: 0.85rem;">Interact with administrative assistance modules for troubleshooting metadata distribution pipelines.</p>
+                    <textarea rows="5" placeholder="Describe deployment or catalog structural exceptions..."></textarea>
+                    <button class="btn" style="width:auto; padding: 12px 30px;">Dispatch Query</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- PWA Installation Layer -->
+    <div id="overlay" onclick="closeInstallSheet()"></div>
+    <div id="install-sheet">
+        <h3 style="color: var(--gold); margin-top: 0;">Install SDR Admin Portal</h3>
+        <p style="font-size: 0.85rem; color: #ccc; margin-bottom: 25px;">Add this engine to your home screen for instantaneous workspace access and optimized mobile operations.</p>
+        <button class="btn" id="confirm-install-btn" style="margin-bottom: 10px;">Install App</button>
+        <button class="btn" style="background: transparent; color: #aaa; border: 1px solid rgba(255,255,255,0.1);" onclick="closeInstallSheet()">Cancel</button>
+    </div>
+
+    <!-- Logic Engine Processing Script -->
+    <script>
+        // Authentication Control Subsystem
+        function authenticate() {
+            const passKeyInput = document.getElementById('pass-key').value;
+            
+            // Validation validation sequence
+            if (passKeyInput.trim() !== "") {
+                document.getElementById('login-layer').classList.add('hidden');
+                document.getElementById('portal-shell').classList.remove('hidden');
+            } else {
+                alert("Access Denied: Invalid Authentication Token.");
+            }
+        }
+
+        // Add Enter Key event listener to password input field
+        document.getElementById('pass-key').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                authenticate();
+            }
+        });
+
+        // Interface Navigation Layer Manager
+        function showPage(pageId, navElement) {
+            // Deactivate all running page views
+            document.querySelectorAll('.page-layer').forEach(page => {
+                page.classList.remove('active');
+            });
+            // Revoke active navigation classes
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Activate specific node selection targets
+            document.getElementById('page-' + pageId).classList.add('active');
+            navElement.classList.add('active');
+        }
+
+        // Progressive Web App Installation Controller
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        function installAppEngine() {
+            if (deferredPrompt) {
+                document.getElementById('overlay').classList.add('show');
+                document.getElementById('install-sheet').classList.add('show');
+                
+                document.getElementById('confirm-install-btn').onclick = () => {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                            console.log('User deployed SDR App instance.');
+                        }
+                        closeInstallSheet();
+                    });
+                };
+            } else {
+                alert("PWA setup payload is already active or unsupported directly by this viewport configuration.");
+            }
+        }
+
+        function closeInstallSheet() {
+            document.getElementById('overlay').classList.remove('show');
+            document.getElementById('install-sheet').classList.remove('show');
+        }
+    </script>
+</body>
+    </html>
